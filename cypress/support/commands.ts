@@ -35,3 +35,23 @@
 //     }
 //   }
 // }
+
+
+Cypress.Commands.add('copyPaste', { prevSubject: true }, (subject, text) => {
+    cy.wrap(subject).then(($subject) => {
+        const clipboardEvent = new Event('paste', {
+            bubbles: true,
+            cancelable: true,
+        });
+        Object.assign(clipboardEvent, {
+            clipboardData: {
+                getData: () => text
+            }
+        });
+        $subject[0].dispatchEvent(clipboardEvent);
+        $subject[0].value += text;
+    });
+});
+
+
+export {}

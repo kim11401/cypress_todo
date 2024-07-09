@@ -23,9 +23,10 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node", "./cypress/support"]
   },
   "include": [
-    "src"
+    "src",
+    "cypress/**/*.ts"
   ]
 }
