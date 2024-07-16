@@ -1,24 +1,30 @@
 import React, { useState, KeyboardEvent } from 'react'
-import Input from "../atoms/Input";
-import Button from "../atoms/Button";
-import TodoList from "../molecules/TodoList";
+import Input from '../atoms/Input'
+import Button from '../atoms/Button'
+import TodoList from '../molecules/TodoList'
 import styled from 'styled-components'
-import InputModal from "../molecules/Modal/InputModal";
+import InputModal from '../molecules/Modal/InputModal'
+import Alert from '../molecules/Modal/Alert'
 
 interface Todo {
-  text: string;
-  completed: boolean;
+  text: string
+  completed: boolean
 }
-
 
 const TodoApp = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [input, setInput] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isAlert, setIsAlert] = useState<boolean>(false)
   const [editInput, setEditInput] = useState<string>('')
   const [currentTodo, setCurrentTodo] = useState<number | null>(null)
 
   const addTodo = () => {
+    if (input.length === 0) {
+      setIsAlert(true)
+      return
+    }
+
     if (input.trim() === '') return
     setTodos([...todos, { text: input, completed: false }])
     setInput('')
@@ -30,19 +36,19 @@ const TodoApp = () => {
     }
   }
 
-  const deleteTodo = (index:number) => {
+  const deleteTodo = (index: number) => {
     const newTodos = todos.filter((_, i) => i !== index)
     setTodos(newTodos)
   }
 
-  const toggleTodo = (index:number) => {
+  const toggleTodo = (index: number) => {
     const newTodos = todos.map((todo, i) =>
       i === index ? { ...todo, completed: !todo.completed } : todo
     )
     setTodos(newTodos)
   }
 
-  const onEdit = (index:number) => {
+  const onEdit = (index: number) => {
     setCurrentTodo(index)
     setEditInput(todos[index].text)
     setIsModalOpen(true)
@@ -70,7 +76,9 @@ const TodoApp = () => {
               width={80}
               isBorder={false}
               value={input}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setInput(e.target.value)
+              }
               onKeyDown={handleKeyDown}
               placeholder="할 일을 입력하세요"
             />
@@ -84,13 +92,17 @@ const TodoApp = () => {
             onDelete={deleteTodo}
             onEdit={onEdit}
           />
-
           <InputModal
             isOpen={isModalOpen}
             handleEditSave={handleEditSave}
             setEditInput={setEditInput}
             onClose={() => setIsModalOpen(false)}
             editInput={editInput}
+          />
+          <Alert
+            isOpen={isAlert}
+            onClose={() => setIsAlert(false)}
+            text={'할 일을 입력해주세요'}
           />
         </TodoContainer>
       </TodoWrapper>

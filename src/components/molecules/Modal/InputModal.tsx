@@ -1,15 +1,15 @@
-import React, { KeyboardEvent } from 'react'
+import React, { KeyboardEvent, useEffect } from 'react'
 import styled from 'styled-components'
-import ModalLayout from "./ModalLayout";
-import Button from "../../atoms/Button";
-import Input from "../../atoms/Input";
+import ModalLayout from './ModalLayout'
+import Button from '../../atoms/Button'
+import Input from '../../atoms/Input'
 
 interface InputModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  setEditInput: (value: string) => void;
-  editInput: string;
-  handleEditSave: () => void;
+  isOpen: boolean
+  onClose: () => void
+  setEditInput: (value: string) => void
+  editInput: string
+  handleEditSave: () => void
 }
 
 const InputModal = ({
@@ -19,6 +19,20 @@ const InputModal = ({
   editInput,
   handleEditSave
 }: InputModalProps) => {
+  useEffect(() => {
+    const handleKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose()
+      }
+    }
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown)
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, onClose])
+
   if (!isOpen) {
     return null
   }
@@ -31,7 +45,7 @@ const InputModal = ({
 
   return (
     <ModalLayout>
-      <InputModalWrapper>
+      <InputModalWrapper id={'editModal'}>
         <ModalHeader>
           <ModalTitle>{'수정하기'}</ModalTitle>
           <ModalCloseButton onClick={onClose}>{'x'}</ModalCloseButton>
