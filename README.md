@@ -3,12 +3,36 @@ Cypress를 사용하여 E2E 테스트 코드와 CI/CD를 학습 및 실습해보
 프로젝트 실습을 위해 React를 사용하여 간단한 TodoList를 구현하였습니다.
 
 ## Test Enviroment
-#### Browser(Cypress는 Chrome,Edge,Electron만 지원을 하고 있습니다.)
-- Chrome - 버전 126.0.6478.127(공식 빌드) (64비트)
-- Edge - 버전 126(64비트)
+<table>
+ <tr>
+  <td>
+   <b>Broser</b>
+  </td>
+  <td>
+   - Chrome - 버전 126.0.6478.127(공식 빌드) (64비트)<br>
+   - Edge - 버전 126(64비트)
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <b>Test Device</b>
+  </td>
+  <td>
+   - PC - Web
+  </td>
+ </tr>
+  <tr>
+  <td>
+   <b>Test URL</b>
+  </td>
+  <td>
+   - http://localhost:3000/
+  </td>
+ </tr>
+</table>
 
 ## 기능 소개
-#### 이 TodoList는 다음과 같은 기능들을 제공합니다:
+#### TodoList는 다음과 같은 기능들을 제공합니다.
 
 1. 할 일 추가
  - 사용자는 입력 필드를 통해 새로운 할 일을 추가할 수 있습니다.
@@ -34,3 +58,5 @@ Cypress를 사용하여 E2E 테스트 코드와 CI/CD를 학습 및 실습해보
 ## TestCase
 [TC 바로가기](https://docs.google.com/spreadsheets/d/1M8znB8AjMz3_I2Q9O3Xuk9-1kRuwMkn--X2LcxzuiGQ/edit?usp=sharing)
 
+## 테스트 전략
+Git Action을 사용해 작성한 E2E테스트 코드를 수행합니다.
