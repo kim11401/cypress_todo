@@ -1,25 +1,26 @@
 import React from 'react'
-import Button from "../atoms/Button";
+import Button from '../atoms/Button'
 import styled from 'styled-components'
 import editIcon from '../../assets/svg/edit.svg'
 import remove from '../../assets/svg/remove.svg'
 
 interface Todo {
-    text: string;
-    completed: boolean;
+  text: string
+  completed: boolean
 }
 
 interface TodoItemProps {
-    todo: Todo;
-    onToggle: () => void;
-    onDelete: () => void;
-    onEdit: () => void;
+  todo: Todo
+  onToggle: () => void
+  onDelete: () => void
+  onEdit: () => void
 }
 
-const TodoItem = ({ todo, onToggle, onDelete, onEdit }:TodoItemProps) => {
+const TodoItem = ({ todo, onToggle, onDelete, onEdit }: TodoItemProps) => {
   return (
     <ItemContainer>
       <span
+        title={todo.text}
         style={{
           textDecoration: todo.completed ? 'line-through' : 'none',
           cursor: 'pointer'
@@ -47,6 +48,8 @@ const ItemContainer = styled.li`
 
   & span {
     width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `
 

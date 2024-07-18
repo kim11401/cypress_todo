@@ -62,6 +62,35 @@ describe('Todo List Test', () => {
     todoPage.getAddButton().click()
     todoPage.getTextContains(TEST_TODO)
   })
+  it('말 줄임표 확인', () => {
+    const { LONG_TEXT } = INPUT_DATA
+    todoPage.getInput().type(LONG_TEXT)
+    todoPage.getAddButton().click()
+    // 추가된 Todo 항목 찾기
+    cy.contains(LONG_TEXT).then(($el) => {
+      if (!$el) {
+        throw new Error('Element not found')
+      }
+
+      const el = $el[0] as HTMLElement
+
+      // 실제 너비와 스크롤 너비를 Cypress 로그에 출력
+      const spanWidth = el.offsetWidth
+      const spanScrollWidth = el.scrollWidth
+
+      // 텍스트가 넘치는지 확인
+      expect(spanScrollWidth).to.be.greaterThan(spanWidth)
+    })
+  })
+
+  it('툴팁 확인', () => {
+    const { LONG_TEXT } = INPUT_DATA
+    todoPage.getInput().type(LONG_TEXT)
+    todoPage.getAddButton().click()
+    cy.contains(LONG_TEXT)
+      .trigger('mouseover')
+      .should('have.attr', 'title', LONG_TEXT)
+  })
 
   it('아무런 입력을 하지 않고 등록을 시도한다.', () => {
     todoPage.getAddButton().click()
